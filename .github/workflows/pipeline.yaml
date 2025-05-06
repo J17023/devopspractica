@@ -11,6 +11,7 @@ jobs:
     env:
       AWS_REGION: us-east-1
       STACK_NAME: juliandevops
+      BUCKET_NAME: frontend-static-juliandevops-us-east-1
 
     steps:
       - name: Checkout repo
@@ -39,3 +40,7 @@ jobs:
             --capabilities CAPABILITY_IAM \
             --no-confirm-changeset \
             --no-fail-on-empty-changeset
+
+      - name: Upload frontend to S3
+        run: |
+          aws s3 sync frontend/ s3://$BUCKET_NAME --delete
